@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 const questions = [
   {
     id: 3457,
@@ -31,8 +33,32 @@ const questions = [
     answer: "Controlled element",
   },
 ];
+
+function FlashCard({ question }) {
+  const [selectedId, setSelectedId] = useState(null);
+
+  function handleClick(id) {
+    setSelectedId(selectedId === id ? null : id);
+  }
+
+  return (
+    <div
+      onClick={(e) => handleClick(selectedId)}
+      className={selectedId === question.id ? "selected" : ""}
+    >
+      {selectedId === question.id ? question.answer : question.question}
+    </div>
+  );
+}
+
 function FlashCards() {
-  return <div>TODO</div>;
+  return (
+    <div className="flashcards">
+      {questions.map((question) => (
+        <FlashCard question={question} />
+      ))}
+    </div>
+  );
 }
 
 function App() {
